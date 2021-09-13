@@ -18,7 +18,7 @@ public class PageIterator<T, C> extends AbstractIterator<List<T>> {
 
     @Override
     protected List<T> computeNext() {
-        if (isEnd ) {
+        if (isEnd) {
             return endOfData();
         }
         List<T> data = pageTask.getNextPage(ctx);
@@ -41,31 +41,31 @@ public class PageIterator<T, C> extends AbstractIterator<List<T>> {
 
         @Override
         protected T computeNext() {
-            if(itemIterator == null || ! itemIterator.hasNext()) {
+            if (itemIterator == null || !itemIterator.hasNext()) {
                 itemIterator = computeNextItemIterator();
-                if(itemIterator == null){
+                if (itemIterator == null) {
                     return null;
                 }
             }
-            if (itemIterator.hasNext()){
+            if (itemIterator.hasNext()) {
                 return itemIterator.next();
             }
-            return  computeNext();
+            return computeNext();
         }
 
 
-        private Iterator<T> computeNextItemIterator(){
-            if(! batchIterator.hasNext()){
+        private Iterator<T> computeNextItemIterator() {
+            if (!batchIterator.hasNext()) {
                 endOfData();
                 return null;
             }
-            return  batchIterator.next().iterator();
+            return batchIterator.next().iterator();
         }
 
     }
 
 
-    public static <T, C> Iterator<T> iterator(PageTask<T, C> task, C ctx){
+    public static <T, C> Iterator<T> iterator(PageTask<T, C> task, C ctx) {
         PageIterator<T, C> it = new PageIterator<>(task, ctx);
         return new PageItemIterator<>(it);
     }

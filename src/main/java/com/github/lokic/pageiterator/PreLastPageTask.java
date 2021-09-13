@@ -1,10 +1,10 @@
 package com.github.lokic.pageiterator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 基于上次取的最后一条数据取数据
+ *
  * @param <T>
  * @param <C>
  */
@@ -29,12 +29,13 @@ public abstract class PreLastPageTask<T, C> implements PageTask<T, C> {
 
     /**
      * 计算上次取的最后一条数据
+     *
      * @param data
      * @param cxt
      * @return
      */
     abstract T computePreLast(List<T> data, C cxt);
 
-    abstract List<T> getNextData(T preLast , int pageSize, C ctx);
+    abstract List<T> getNextData(T preLast, int pageSize, C ctx);
 
 }

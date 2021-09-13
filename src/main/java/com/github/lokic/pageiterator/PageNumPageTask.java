@@ -15,7 +15,7 @@ public abstract class PageNumPageTask<T, C> implements PageTask<T, C> {
     @Override
     public List<T> getNextPage(C ctx) {
         currentPageNum = currentPageNum + 1;
-        return getNextBatch(currentPageNum , getPageSize(), ctx);
+        return getNextBatch(currentPageNum, getPageSize(), ctx);
     }
 
     @Override
