@@ -20,7 +20,7 @@ public class PageIteratorTest {
         List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
         PageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextBatch(int pageNum, int pageSize, String ctx) {
+            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
             }
 
@@ -50,10 +50,10 @@ public class PageIteratorTest {
             }
 
             @Override
-            List<Integer> getNextData(Integer preLast, int pageSize, String ctx) {
-                int startId = preLast == null ? 0: preLast;
+            List<Integer> getNextPage(Integer preLast, int pageSize, String ctx) {
+                int startId = preLast == null ? 0 : preLast;
                 return li.stream()
-                        .filter(x -> x> startId)
+                        .filter(x -> x > startId)
                         .limit(pageSize)
                         .collect(Collectors.toList());
             }
@@ -67,7 +67,7 @@ public class PageIteratorTest {
         List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
         PageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextBatch(int pageNum, int pageSize, String ctx) {
+            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
             }
 
@@ -93,7 +93,7 @@ public class PageIteratorTest {
         List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
         PageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextBatch(int pageNum, int pageSize, String ctx) {
+            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
             }
 

@@ -16,7 +16,7 @@ public abstract class PreLastPageTask<T, C> implements PageTask<T, C> {
     @Override
     public List<T> getNextPage(C ctx) {
         currentPageNum = currentPageNum + 1;
-        List<T> data = getNextData(start, getPageSize(), ctx);
+        List<T> data = getNextPage(start, getPageSize(), ctx);
         start = computePreLast(data, ctx);
 
         return data;
@@ -36,6 +36,6 @@ public abstract class PreLastPageTask<T, C> implements PageTask<T, C> {
      */
     abstract T computePreLast(List<T> data, C cxt);
 
-    abstract List<T> getNextData(T preLast, int pageSize, C ctx);
+    abstract List<T> getNextPage(T preLast, int pageSize, C ctx);
 
 }
