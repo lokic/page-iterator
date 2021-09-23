@@ -31,12 +31,12 @@ public class PageIterator<T, C> extends AbstractIterator<List<T>> {
 
     private static class PageItemIterator<T> extends AbstractIterator<T> {
 
-        private final Iterator<List<T>> batchIterator;
+        private final Iterator<List<T>> pageIterator;
 
         private Iterator<T> itemIterator;
 
-        private PageItemIterator(Iterator<List<T>> batchIterator) {
-            this.batchIterator = batchIterator;
+        private PageItemIterator(Iterator<List<T>> pageIterator) {
+            this.pageIterator = pageIterator;
         }
 
         @Override
@@ -55,11 +55,11 @@ public class PageIterator<T, C> extends AbstractIterator<List<T>> {
 
 
         private Iterator<T> computeNextItemIterator() {
-            if (!batchIterator.hasNext()) {
+            if (!pageIterator.hasNext()) {
                 endOfData();
                 return null;
             }
-            return batchIterator.next().iterator();
+            return pageIterator.next().iterator();
         }
 
     }
