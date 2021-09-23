@@ -10,18 +10,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PageIteratorTest {
 
 
     @Test
     public void pageNumTest() {
-        List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
+        List<List<String>> pageData = Lists.newArrayList(
+                Lists.newArrayList("1", "2", "3"),
+                Lists.newArrayList("4", "5", "6"),
+                Lists.newArrayList("7", "8", "9"),
+                Lists.newArrayList("10", "11")
+        );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
             List<String> getNextPage(int pageNum, int pageSize, String ctx) {
-                return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
+                return pageData.get(pageNum - 1);
             }
 
             @Override
@@ -30,7 +34,8 @@ public class PageIteratorTest {
             }
         };
         PageNumPageTask<String, String> spyTask = Mockito.spy(task);
-        Assert.assertEquals(li, Streams.stream(PageIterator.iterator(spyTask, "")).collect(Collectors.toList()));
+        Assert.assertEquals(Lists.newArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"),
+                Streams.stream(PageIterator.iterator(spyTask, "")).collect(Collectors.toList()));
         // 11个数据，，每页3个数据，4次取完
         Mockito.verify(spyTask, Mockito.times(4)).getNextPage(Mockito.any(Integer.class), Mockito.any(Integer.class), Mockito.anyString());
     }
@@ -38,7 +43,7 @@ public class PageIteratorTest {
 
     @Test
     public void preLastTest() {
-        List<Integer> li = IntStream.range(1, 11).boxed().collect(Collectors.toList());
+        List<Integer> li = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 
         PreLastPageTask<Integer, String> task = new PreLastPageTask<Integer, String>() {
             @Override
@@ -67,12 +72,17 @@ public class PageIteratorTest {
     }
 
     @Test
-    public void maxPageNumTest(){
-        List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
+    public void maxPageNumTest() {
+        List<List<String>> pageData = Lists.newArrayList(
+                Lists.newArrayList("1", "2", "3"),
+                Lists.newArrayList("4", "5", "6"),
+                Lists.newArrayList("7", "8", "9"),
+                Lists.newArrayList("10", "11")
+        );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
             List<String> getNextPage(int pageNum, int pageSize, String ctx) {
-                return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
+                return pageData.get(pageNum - 1);
             }
 
             @Override
@@ -95,12 +105,17 @@ public class PageIteratorTest {
 
 
     @Test
-    public void limitTest(){
-        List<String> li = IntStream.range(1, 11).boxed().map(String::valueOf).collect(Collectors.toList());
+    public void limitTest() {
+        List<List<String>> pageData = Lists.newArrayList(
+                Lists.newArrayList("1", "2", "3"),
+                Lists.newArrayList("4", "5", "6"),
+                Lists.newArrayList("7", "8", "9"),
+                Lists.newArrayList("10", "11")
+        );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
             List<String> getNextPage(int pageNum, int pageSize, String ctx) {
-                return li.subList((pageNum - 1) * pageSize, Math.min(li.size(), (pageNum - 1) * pageSize + pageSize));
+                return pageData.get(pageNum - 1);
             }
 
             @Override
