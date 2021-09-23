@@ -40,6 +40,32 @@ public class PageIteratorTest {
         Mockito.verify(spyTask, Mockito.times(4)).getNextPage(Mockito.any(Integer.class), Mockito.any(Integer.class), Mockito.anyString());
     }
 
+    @Test
+    public void pageNumTest2() {
+        List<List<String>> pageData = Lists.newArrayList(
+                Lists.newArrayList("1", "2", "3"),
+                Lists.newArrayList("4", "5", "6"),
+                Lists.newArrayList("7", "8", "9"),
+                Lists.newArrayList("10", "11", "12"),
+                Lists.newArrayList()
+        );
+        PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
+            @Override
+            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+                return pageData.get(pageNum - 1);
+            }
+
+            @Override
+            public int getPageSize() {
+                return 3;
+            }
+        };
+        PageNumPageTask<String, String> spyTask = Mockito.spy(task);
+        Assert.assertEquals(Lists.newArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"),
+                Streams.stream(PageIterator.iterator(spyTask, "")).collect(Collectors.toList()));
+        // 12个数据，，每页3个数据，4次取完，但是第5次需要判断数据已经取完，所以getNextPage会执行5次
+        Mockito.verify(spyTask, Mockito.times(5)).getNextPage(Mockito.any(Integer.class), Mockito.any(Integer.class), Mockito.anyString());
+    }
 
     @Test
     public void preLastTest() {
