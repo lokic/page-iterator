@@ -23,5 +23,13 @@ public abstract class PageNumPageTask<T, C> implements PageTask<T, C> {
         return currentPageNum;
     }
 
+    /**
+     * 获取下一页数据
+     *
+     * @param pageNum  页数，数字从1开始
+     * @param pageSize
+     * @param ctx
+     * @return
+     */
     abstract List<T> getNextPage(int pageNum, int pageSize, C ctx);
 }
