@@ -33,7 +33,7 @@ public abstract class PreLastPageTask<T, C> implements PageTask<T, C> {
      * @param cxt
      * @return
      */
-    abstract T computePreLast(List<T> data, C cxt);
+    protected abstract T computePreLast(List<T> data, C cxt);
 
     /**
      * 获取下一页数据
@@ -43,6 +43,6 @@ public abstract class PreLastPageTask<T, C> implements PageTask<T, C> {
      * @param ctx
      * @return
      */
-    abstract List<T> getNextPage(T preLast, int pageSize, C ctx);
+    protected abstract List<T> getNextPage(T preLast, int pageSize, C ctx);
 
 }

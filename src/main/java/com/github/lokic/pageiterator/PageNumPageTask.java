@@ -31,5 +31,5 @@ public abstract class PageNumPageTask<T, C> implements PageTask<T, C> {
      * @param ctx
      * @return
      */
-    abstract List<T> getNextPage(int pageNum, int pageSize, C ctx);
+    protected abstract List<T> getNextPage(int pageNum, int pageSize, C ctx);
 }

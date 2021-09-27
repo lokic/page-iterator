@@ -24,7 +24,7 @@ public class PageIteratorTest {
         );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+            protected List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return pageData.get(pageNum - 1);
             }
 
@@ -51,7 +51,7 @@ public class PageIteratorTest {
         );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+            protected List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return pageData.get(pageNum - 1);
             }
 
@@ -78,12 +78,12 @@ public class PageIteratorTest {
             }
 
             @Override
-            Integer computePreLast(List<Integer> data, String cxt) {
+            protected Integer computePreLast(List<Integer> data, String cxt) {
                 return data.stream().max(Comparator.comparing(Function.identity())).orElse(null);
             }
 
             @Override
-            List<Integer> getNextPage(Integer preLast, int pageSize, String ctx) {
+            protected List<Integer> getNextPage(Integer preLast, int pageSize, String ctx) {
                 int startId = preLast == null ? 0 : preLast;
                 return li.stream()
                         .filter(x -> x > startId)
@@ -107,7 +107,7 @@ public class PageIteratorTest {
         );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+            protected List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return pageData.get(pageNum - 1);
             }
 
@@ -140,7 +140,7 @@ public class PageIteratorTest {
         );
         PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
             @Override
-            List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+            protected List<String> getNextPage(int pageNum, int pageSize, String ctx) {
                 return pageData.get(pageNum - 1);
             }
 
