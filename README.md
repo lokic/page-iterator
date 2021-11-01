@@ -21,7 +21,7 @@
       <version>${lastest.version}</version>
   </dependency>
   ```
-  > 最新版本[查询](https://search.maven.org/search?q=a:page-iterator)
+  > 最新版本[查询](https://search.maven.org/artifact/com.github.lokic/page-iterator)
 - 创建PageTask，现支持如下2种PageTask：
 
   - PageNumPageTask：基于页数取数据。传统的分页取法，页数从1开始
