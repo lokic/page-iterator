@@ -63,7 +63,7 @@
   };
   ```
 
-- 通过PageTask生成Iterator，然后就可以通过Iterator进行数据的遍历了。之后我们就只需要专注于获取数据之后的处理，而非怎么去获取数据
+- 通过PageTask生成Iterator，然后就可以通过Iterator进行数据的遍历了。之后我们就只需要专注于获取数据之后的处理即可
 
   ```java
   Iterator<Integer> pageIterator = PageIterator.iterator(task, context);
