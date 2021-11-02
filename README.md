@@ -24,13 +24,13 @@
   > 最新版本[查询](https://search.maven.org/artifact/com.github.lokic/page-iterator)
 - 创建PageTask，现支持如下2种PageTask：
 
-  - PageNumPageTask：基于页数取数据。传统的分页取法，页数从1开始
+  - PageNumPageTask：基于页数取数据。传统的分页取法，**页数从1开始**
   - PreLastPageTask：基于上次取的最后一条数据取数据。有时需要基于上次取的最后一条数据取数据，比如取上一次的最后一个主键id
 
   ```java
-  PageNumPageTask<String, String> task = new PageNumPageTask<String, String>() {
+  PageNumPageTask<Integer, String> task = new PageNumPageTask<Integer, String>() {
       @Override
-      protected List<String> getNextPage(int pageNum, int pageSize, String ctx) {
+      protected List<Integer> getNextPage(int pageNum, int pageSize, String ctx) {
           // 基于pageNum，获取对应页数的数据
           ...
       }
