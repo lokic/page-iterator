@@ -69,4 +69,12 @@ public class PageIterator<T, C> extends AbstractIterator<List<T>> {
         PageIterator<T, C> it = new PageIterator<>(task, ctx);
         return new PageItemIterator<>(it);
     }
+
+    public static <T, C> PageNumIterator<T, C> pageNumIterator() {
+        return new PageNumIterator<>();
+    }
+
+    public static <T, C> PreLastIterator<T, C> preLastIterator() {
+        return new PreLastIterator<>();
+    }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -78,7 +79,7 @@ public class PageIteratorTest {
             }
 
             @Override
-            protected Integer computePreLast(List<Integer> data, String cxt) {
+            protected Integer computePreLast(List<Integer> data, String ctx) {
                 return data.stream().max(Comparator.comparing(Function.identity())).orElse(null);
             }
 
@@ -159,6 +160,46 @@ public class PageIteratorTest {
         Mockito.verify(spyTask, Mockito.times(2)).getNextPage(Mockito.anyString());
         Mockito.verify(spyTask, Mockito.times(2)).getNextPage(Mockito.any(Integer.class), Mockito.any(Integer.class), Mockito.anyString());
 
+    }
+
+    @Test
+    public void limitTest_for_PageNumIterator() {
+        List<List<String>> pageData = Lists.newArrayList(
+                Lists.newArrayList("1", "2", "3"),
+                Lists.newArrayList("4", "5", "6"),
+                Lists.newArrayList("7", "8", "9"),
+                Lists.newArrayList("10", "11")
+        );
+
+        Iterator<String> iterator = PageIterator.<String, Void>pageNumIterator()
+                .pageSize(3)
+                .nextPage((pageNum, pageSize, c) -> pageData.get(pageNum - 1))
+                .iterator(null);
+
+        List<String> re = Streams.stream(iterator)
+                .limit(4)
+                .collect(Collectors.toList());
+        Assert.assertEquals(Lists.newArrayList("1", "2", "3", "4"), re);
+    }
+
+    @Test
+    public void preLastTest_for_PreLastIterator() {
+        List<Integer> li = Lists.newArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+
+        Iterator<Integer> iterator = PageIterator.<Integer, Void>preLastIterator()
+                .pageSize(3)
+                .computePreLast((data, ctx) ->
+                        data.stream().max(Comparator.comparing(Function.identity())).orElse(null)
+                )
+                .nextPage((preLast, pageSize, ctx) -> {
+                    int startId = preLast == null ? 0 : preLast;
+                    return li.stream()
+                            .filter(x -> x > startId)
+                            .limit(pageSize)
+                            .collect(Collectors.toList());
+                })
+                .iterator(null);
+        Assert.assertEquals(li, Streams.stream(iterator).collect(Collectors.toList()));
     }
 
 }
